@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bảng báo giá BTC</title>
+    <title>Bảng giá BTC</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Giá trực tiếp của Bitcoin (BTC)</h1>
-    <p id="btcPrice">Đang tải giá...</p>
+    <h1>Bảng giá Bitcoin (BTC)</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Thời gian</th>
+                <th>Giá BTC (USD)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="time"></td>
+                <td id="btcPrice">Đang tải giá...</td>
+            </tr>
+        </tbody>
+    </table>
 
-    <script>
-        async function getBTCPrice() {
-            try {
-                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-                const data = await response.json();
-                const btcPrice = data.bitcoin.usd;
-
-                document.getElementById('btcPrice').innerText = `Giá BTC: $${btcPrice}`;
-            } catch (error) {
-                console.error('Lỗi khi lấy giá BTC:', error);
-                document.getElementById('btcPrice').innerText = 'Không thể lấy giá.';
-            }
-        }
-
-        getBTCPrice();
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
