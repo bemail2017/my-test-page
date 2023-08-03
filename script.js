@@ -4,25 +4,28 @@ async function updateCryptoPrices() {
     const tableBody = document.getElementById('cryptoTableBody');
     tableBody.innerHTML = '';
 
-    cryptoPrices.forEach(crypto => {
+    cryptoPrices.forEach((crypto, index) => {
         const row = tableBody.insertRow();
+        const rankCell = row.insertCell();
         const nameCell = row.insertCell();
         const priceCell = row.insertCell();
-        const infoCell = row.insertCell();
+        const webCell = row.insertCell();
+
+        rankCell.innerText = index + 1;
         nameCell.innerText = crypto.name;
         priceCell.innerText = `$${crypto.price}`;
-        infoCell.innerHTML = `<a href="${crypto.infoUrl}" class="link" target="_blank">Xem thêm</a>`;
+        webCell.innerHTML = `<a href="${crypto.web}" class="link" target="_blank">Xem thêm</a>`;
     });
 }
 
 async function getCryptoPrices() {
     try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,ripple,cardano,polkadot,binancecoin,litecoin,chainlink,stellar,bitcoin-cash&vs_currencies=usd');
+        const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1');
         const data = await response.json();
-        const cryptoPrices = Object.keys(data).map(name => ({
-            name,
-            price: data[name].usd,
-            infoUrl: `https://www.coingecko.com/en/coins/${name}`
+        const cryptoPrices = data.map(coin => ({
+            name: coin.name,
+            price: coin.current_price,
+            web: coin.links.homepage[0]
         }));
         return cryptoPrices;
     } catch (error) {
