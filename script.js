@@ -1,56 +1,31 @@
-function countdownTimer() {
-    const countdownDiv = document.getElementById('countdownTimer');
-    let countdown = 30;
-    countdownDiv.textContent = countdown;
-
-    const interval = setInterval(() => {
-        countdown--;
-        countdownDiv.textContent = countdown;
-
-        if (countdown === 0) {
-            countdown = 30;
-            updateCryptoTable();
-        }
-    }, 1000);
-}
-
 async function updateCryptoTable() {
     const cryptoData = await getCryptoData();
-    const cryptoTableBody = document.getElementById('cryptoTableBody');
-    cryptoTableBody.innerHTML = ''; // Clear the table body
+    const currentTime = new Date().toLocaleTimeString();
+    const cryptoTable = document.getElementById('cryptoTable');
+    cryptoTable.innerHTML = ''; // Clear previous data
 
-    for (let i = 0; i < cryptoData.length; i++) {
+    cryptoData.forEach((crypto, index) => {
         const row = document.createElement('tr');
-        const rankCell = document.createElement('td');
-        rankCell.textContent = cryptoData[i].rank;
-        const nameCell = document.createElement('td');
-        nameCell.textContent = cryptoData[i].name;
-        const priceCell = document.createElement('td');
-        priceCell.textContent = `$${cryptoData[i].price}`;
-        const webCell = document.createElement('td');
-        const webLink = document.createElement('a');
-        webLink.textContent = 'Xem thêm';
-        webLink.href = cryptoData[i].website;
-        webLink.target = '_blank';
-        webCell.appendChild(webLink);
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${crypto.name}</td>
+            <td>$${crypto.price}</td>
+            <td><a href="${crypto.web}" target="_blank">Xem thêm</a></td>
+        `;
+        cryptoTable.appendChild(row);
+    });
 
-        row.appendChild(rankCell);
-        row.appendChild(nameCell);
-        row.appendChild(priceCell);
-        row.appendChild(webCell);
-        cryptoTableBody.appendChild(row);
-    }
+    updateClock(currentTime);
 }
 
 async function getCryptoData() {
     try {
-        const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1');
+        const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,dogecoin,shiba-inu,pepe-token&order=market_cap_desc&per_page=6&page=1');
         const data = await response.json();
-        return data.map(item => ({
-            rank: item.market_cap_rank,
-            name: item.name,
-            price: item.current_price,
-            website: item.links.homepage[0]
+        return data.map(crypto => ({
+            name: crypto.name,
+            price: crypto.current_price,
+            web: crypto.links.homepage[0]
         }));
     } catch (error) {
         console.error('Lỗi khi lấy dữ liệu:', error);
@@ -58,11 +33,14 @@ async function getCryptoData() {
     }
 }
 
-// Update table and countdown timer every 30 seconds
-setInterval(() => {
-    updateCryptoTable();
-    countdownTimer();
-}, 30000);
+function updateClock(currentTime) {
+    const secondHand = document.querySelector('.hand');
+    const now = new Date();
+    const seconds = now.getSeconds();
+    const secondsDegrees = ((seconds / 60) * 360) + 90;
+    secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
 
-// Initial update when page loads
-updateCryptoTable();
+    document.getElementById('clockTime').innerText = currentTime;
+}
+
+setInterval(updateCryptoTable, 30000);
