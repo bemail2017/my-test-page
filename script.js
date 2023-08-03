@@ -9,8 +9,6 @@ async function updateCryptoPrices() {
         const nameCell = row.insertCell();
         const priceCell = row.insertCell();
         const infoCell = row.insertCell();
-        nameCell.classList.add('left-align'); // Thêm class để căn lề trái
-        priceCell.classList.add('left-align'); // Thêm class để căn lề trái
         nameCell.innerText = crypto.name;
         priceCell.innerText = `$${crypto.price}`;
         infoCell.innerHTML = `<a href="${crypto.infoUrl}" class="link" target="_blank">Xem thêm</a>`;
