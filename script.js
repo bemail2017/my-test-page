@@ -1,3 +1,19 @@
+function countdownTimer() {
+    const countdownDiv = document.getElementById('countdownTimer');
+    let countdown = 30;
+    countdownDiv.textContent = countdown;
+
+    const interval = setInterval(() => {
+        countdown--;
+        countdownDiv.textContent = countdown;
+
+        if (countdown === 0) {
+            countdown = 30;
+            updateCryptoTable();
+        }
+    }, 1000);
+}
+
 async function updateCryptoTable() {
     const cryptoData = await getCryptoData();
     const cryptoTableBody = document.getElementById('cryptoTableBody');
@@ -42,8 +58,11 @@ async function getCryptoData() {
     }
 }
 
-// Update table every 30 seconds
-setInterval(updateCryptoTable, 30000);
+// Update table and countdown timer every 30 seconds
+setInterval(() => {
+    updateCryptoTable();
+    countdownTimer();
+}, 30000);
 
 // Initial update when page loads
 updateCryptoTable();
