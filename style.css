@@ -20,7 +20,7 @@ table {
 
 th, td {
     padding: 10px;
-    text-align: left;
+    text-align: left; /* Căn lề trái */
     border-bottom: 1px solid #ddd;
 }
 
