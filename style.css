@@ -1,67 +1,18 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 20px;
+    background-image: url("https://i.imgur.com/1b4Pfdr.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* Các thuộc tính CSS khác để tùy chỉnh background nếu cần */
 }
 
-h1 {
-    color: #333;
+header {
+    /* CSS code for styling header */
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
-    background-color: #f0f0f0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+main {
+    /* CSS code for styling main content */
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #333;
-    color: white;
-}
-
-tr:hover {
-    background-color: #f5f5f5;
-}
-
-.clock {
-    position: relative;
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-    background-color: #f0f0f0;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 20px;
-}
-
-.clock-face {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    height: 80%;
-    border: 2px solid #333;
-    border-radius: 50%;
-}
-
-.hand {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform-origin: 50% 100%;
-    transform: translate(-50%, 0);
-    width: 1px;
-    height: 40%;
-    background-color: #333;
-    transition: transform 0.5s ease-in-out;
+footer {
+    /* CSS code for styling footer */
 }
